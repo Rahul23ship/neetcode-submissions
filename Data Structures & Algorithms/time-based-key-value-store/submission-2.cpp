@@ -1,0 +1,22 @@
+class TimeMap {
+public:
+    map<string,map<int,string>>mp;
+    TimeMap() {
+
+    }
+    void set(string key, string value, int timestamp) {
+        mp[key][timestamp]=value;
+    }
+    
+    string get(string key, int timestamp) {
+        if(mp.find(key)!=mp.end()){
+            auto& inner=mp[key];
+            auto it=inner.lower_bound(timestamp);
+            if(it!=inner.end() && it->first==timestamp)
+            return it->second;
+            if(it!=inner.begin())it--;
+            if(it->first<timestamp)return it->second;
+        }
+        return "";
+    }
+};
